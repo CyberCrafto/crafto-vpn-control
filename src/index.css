@@ -1,0 +1,422 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  --color-ink-950: #05080f;
+  --color-ink-900: #070c16;
+  --color-ink-850: #0a101c;
+  --color-ink-800: #0c1322;
+  --color-ink-700: #121c2e;
+  --color-line: #1a2740;
+
+  --color-brand: #2e90ff;
+  --color-brand-soft: #7cb8ff;
+  --color-aqua: #3fe0d8;
+  --color-mint: #34d399;
+}
+
+@layer base {
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  body {
+    background-color: #05080f;
+    color: #dbe5f5;
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow: hidden;
+  }
+
+  ::selection {
+    background: rgba(46, 144, 255, 0.28);
+    color: #f2f8ff;
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #24334e transparent;
+  }
+
+  *::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  *::-webkit-scrollbar-thumb {
+    background: #22314b;
+    border-radius: 999px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+  }
+  *::-webkit-scrollbar-thumb:hover {
+    background: #334767;
+    background-clip: content-box;
+  }
+
+  :focus-visible {
+    outline: none;
+  }
+}
+
+/* ---------- surfaces ---------- */
+.app-bg {
+  background-color: #05080f;
+  background-image:
+    radial-gradient(900px 520px at 8% -8%, rgba(46, 144, 255, 0.1), transparent 62%),
+    radial-gradient(760px 500px at 96% 4%, rgba(63, 224, 216, 0.055), transparent 60%),
+    radial-gradient(1000px 640px at 60% 108%, rgba(28, 62, 122, 0.16), transparent 65%);
+}
+
+.panel {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.028), rgba(255, 255, 255, 0.008)),
+    #0a111d;
+  border: 1px solid rgba(148, 180, 230, 0.1);
+  box-shadow:
+    0 1px 0 0 rgba(255, 255, 255, 0.035) inset,
+    0 24px 60px -34px rgba(0, 0, 0, 0.9);
+}
+
+.panel-soft {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.004)),
+    #0a101b;
+  border: 1px solid rgba(148, 180, 230, 0.08);
+}
+
+.hairline-grid {
+  background-image:
+    linear-gradient(rgba(120, 165, 230, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(120, 165, 230, 0.055) 1px, transparent 1px);
+  background-size: 34px 34px;
+  mask-image: radial-gradient(ellipse at 72% 12%, black 0%, transparent 74%);
+  -webkit-mask-image: radial-gradient(ellipse at 72% 12%, black 0%, transparent 74%);
+}
+
+.noise {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.14) 0.5px, transparent 0.5px);
+  background-size: 5px 5px;
+  opacity: 0.12;
+}
+
+/* ---------- motion ---------- */
+@keyframes crafto-spin-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.spin-slow {
+  animation: crafto-spin-slow 26s linear infinite;
+}
+.spin-slower {
+  animation: crafto-spin-slow 46s linear infinite reverse;
+}
+
+@keyframes crafto-ping-soft {
+  0% {
+    transform: scale(0.72);
+    opacity: 0.55;
+  }
+  80%,
+  100% {
+    transform: scale(1.9);
+    opacity: 0;
+  }
+}
+.ping-soft::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  border: 1px solid currentColor;
+  animation: crafto-ping-soft 2.6s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes crafto-dash {
+  to {
+    stroke-dashoffset: -24;
+  }
+}
+.flow-line {
+  stroke-dasharray: 2 6;
+  animation: crafto-dash 1.6s linear infinite;
+}
+
+@keyframes crafto-scan {
+  0% {
+    transform: translateY(-110%);
+  }
+  100% {
+    transform: translateY(320%);
+  }
+}
+.scanline {
+  animation: crafto-scan 5.5s linear infinite;
+}
+
+@keyframes crafto-blink {
+  0%,
+  45% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+.caret {
+  animation: crafto-blink 1.05s steps(1) infinite;
+}
+
+@keyframes crafto-glow {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 0.9;
+  }
+}
+.status-glow {
+  animation: crafto-glow 4.5s ease-in-out infinite;
+}
+
+.scroll-fade {
+  mask-image: linear-gradient(to bottom, transparent, black 14px, black calc(100% - 14px), transparent);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, black 14px, black calc(100% - 14px), transparent);
+}
+
+.terminal-scroll {
+  scrollbar-color: #22304a transparent;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* native select option colors */
+select option {
+  background-color: #0b1320;
+  color: #dbe5f5;
+}
+
+/* ==================================================================
+   LIGHT THEME
+   The dark theme is the default. Every surface, border, shadow and
+   accent used across the dashboard/console is re-mapped here so the
+   interface keeps strong contrast and stays fully readable.
+   ================================================================== */
+
+html {
+  color-scheme: dark;
+  background-color: #05080f;
+}
+
+html[data-theme="light"] {
+  color-scheme: light;
+  background-color: #eef3f9;
+}
+
+[data-theme="light"] body {
+  background-color: #eef3f9;
+  color: #1e293b;
+}
+
+[data-theme="light"] ::selection {
+  background: rgba(46, 144, 255, 0.22);
+  color: #0b1526;
+}
+
+[data-theme="light"] * {
+  scrollbar-color: #c3cfdd transparent;
+}
+[data-theme="light"] *::-webkit-scrollbar-thumb {
+  background: #c3cfdd;
+  background-clip: content-box;
+}
+[data-theme="light"] *::-webkit-scrollbar-thumb:hover {
+  background: #a9bacd;
+  background-clip: content-box;
+}
+
+[data-theme="light"] .app-bg {
+  background-color: #eef3f9;
+  background-image:
+    radial-gradient(900px 520px at 8% -8%, rgba(46, 144, 255, 0.1), transparent 62%),
+    radial-gradient(760px 500px at 96% 4%, rgba(20, 184, 166, 0.07), transparent 60%),
+    radial-gradient(1000px 640px at 60% 108%, rgba(28, 62, 122, 0.06), transparent 65%);
+}
+
+[data-theme="light"] .panel {
+  background: linear-gradient(180deg, #ffffff, #fbfdff);
+  border-color: rgba(15, 23, 42, 0.09);
+  box-shadow:
+    0 1px 0 0 rgba(255, 255, 255, 0.9) inset,
+    0 20px 44px -32px rgba(15, 23, 42, 0.35);
+}
+
+[data-theme="light"] .panel-soft {
+  background: #ffffff;
+  border-color: rgba(15, 23, 42, 0.08);
+}
+
+[data-theme="light"] .hairline-grid {
+  background-image:
+    linear-gradient(rgba(15, 23, 42, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(15, 23, 42, 0.055) 1px, transparent 1px);
+}
+
+[data-theme="light"] .noise {
+  opacity: 0.04;
+}
+
+[data-theme="light"] select option {
+  background-color: #ffffff;
+  color: #0f172a;
+}
+
+/* ---------- surfaces ---------- */
+[data-theme="light"] [class*="bg-[#070c15]"] { background-color: #ffffff; }
+[data-theme="light"] [class*="bg-[#05080f]"] { background-color: #eef3f9; }
+[data-theme="light"] [class*="bg-[#060b13]"] { background-color: #f7fafc; }
+[data-theme="light"] [class*="bg-[#080e17]"],
+[data-theme="light"] [class*="bg-[#080f1a]"] { background-color: #f1f5f9; }
+[data-theme="light"] [class*="bg-[#080e18]"] { background-color: #f8fafc; }
+[data-theme="light"] [class*="bg-[#0a111d]"] { background-color: #ffffff; }
+[data-theme="light"] [class*="bg-[#0a101b]"] { background-color: #f8fafc; }
+[data-theme="light"] [class*="bg-[#0a1220]"] { background-color: #ffffff; }
+[data-theme="light"] [class*="bg-[#0a1320]"] { background-color: #ffffff; }
+[data-theme="light"] [class*="bg-[#0a1720]"] { background-color: #f0fdf8; }
+[data-theme="light"] [class*="bg-[#050a11]"] { background-color: #f8fafc; }
+[data-theme="light"] [class*="bg-[#0d1626]"] { background-color: #ffffff; }
+[data-theme="light"] [class*="bg-[#0b1220]"],
+[data-theme="light"] [class*="bg-[#0a1a1a]"],
+[data-theme="light"] [class*="bg-[#0b1a2b]"] { background-color: #ffffff; }
+[data-theme="light"] [class*="bg-[#0c1524]"] { background-color: #e5ecf5; }
+[data-theme="light"] [class*="bg-[#182337]"] { background-color: #dbe3ee; }
+[data-theme="light"] [class*="bg-[#8b9bb4]"] { background-color: #94a3b8; }
+
+/* subtle white-alpha fills used on dark surfaces */
+[data-theme="light"] [class*=" bg-white/["],
+[data-theme="light"] [class^="bg-white/["] { background-color: rgba(15, 23, 42, 0.035); }
+[data-theme="light"] [class*=" bg-white/5"],
+[data-theme="light"] [class^="bg-white/5"] { background-color: rgba(15, 23, 42, 0.06); }
+
+/* ---------- borders & rings ---------- */
+[data-theme="light"] [class*=" border-white/"],
+[data-theme="light"] [class^="border-white/"] { border-color: rgba(15, 23, 42, 0.11); }
+[data-theme="light"] [class*=" ring-white/"],
+[data-theme="light"] [class^="ring-white/"] { --tw-ring-color: rgba(15, 23, 42, 0.16); }
+[data-theme="light"] [class*="ring-offset-[#05080f]"] { --tw-ring-offset-color: #eef3f9; }
+[data-theme="light"] [class*="border-[#0a111d]"],
+[data-theme="light"] [class*="border-[#0a1720]"] { border-color: #ffffff; }
+
+/* ---------- typography ---------- */
+[data-theme="light"] [class*=" text-white"],
+[data-theme="light"] [class^="text-white"],
+[data-theme="light"] [class*=" text-slate-100"],
+[data-theme="light"] [class^="text-slate-100"],
+[data-theme="light"] [class*=" text-slate-200"],
+[data-theme="light"] [class^="text-slate-200"] { color: #0b1526; }
+
+[data-theme="light"] [class*=" text-slate-300"],
+[data-theme="light"] [class^="text-slate-300"] { color: #334155; }
+[data-theme="light"] [class*=" text-slate-400"],
+[data-theme="light"] [class^="text-slate-400"] { color: #475569; }
+[data-theme="light"] [class*=" text-slate-500"],
+[data-theme="light"] [class^="text-slate-500"] { color: #5b6b80; }
+[data-theme="light"] [class*=" text-slate-600"],
+[data-theme="light"] [class^="text-slate-600"] { color: #64748b; }
+[data-theme="light"] [class*=" text-slate-700"],
+[data-theme="light"] [class^="text-slate-700"] { color: #64748b; }
+
+[data-theme="light"] [class*=" text-cyan-"],
+[data-theme="light"] [class^="text-cyan-"] { color: #0e7490; }
+[data-theme="light"] [class*=" text-sky-"],
+[data-theme="light"] [class^="text-sky-"] { color: #0369a1; }
+[data-theme="light"] [class*=" text-emerald-"],
+[data-theme="light"] [class^="text-emerald-"] { color: #047857; }
+[data-theme="light"] [class*=" text-rose-"],
+[data-theme="light"] [class^="text-rose-"] { color: #be123c; }
+[data-theme="light"] [class*=" text-amber-"],
+[data-theme="light"] [class^="text-amber-"] { color: #b45309; }
+[data-theme="light"] [class*=" text-violet-"],
+[data-theme="light"] [class^="text-violet-"] { color: #6d28d9; }
+
+/* ---------- hover states ---------- */
+[data-theme="light"] [class*="hover:bg-white/"]:hover { background-color: rgba(15, 23, 42, 0.055); }
+[data-theme="light"] [class*="hover:border-white/"]:hover { border-color: rgba(15, 23, 42, 0.2); }
+[data-theme="light"] [class*="hover:text-white"]:hover,
+[data-theme="light"] [class*="hover:text-slate-"]:hover { color: #0b1526; }
+[data-theme="light"] [class*="hover:text-sky-"]:hover { color: #0369a1; }
+[data-theme="light"] [class*="hover:text-cyan-"]:hover { color: #0e7490; }
+[data-theme="light"] [class*="hover:text-emerald-"]:hover { color: #047857; }
+[data-theme="light"] [class*="hover:text-rose-"]:hover { color: #be123c; }
+
+[data-theme="light"] .terminal-scroll {
+  scrollbar-color: #c3cfdd transparent;
+}
+
+/* smooth switching without touching layout */
+body,
+.app-bg,
+.panel,
+.panel-soft {
+  transition:
+    background-color 0.28s ease,
+    border-color 0.28s ease,
+    color 0.28s ease;
+}
+
+/* theme switch control — explicit states so the active option stays legible */
+.theme-switch-btn {
+  color: #64748b;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+.theme-switch-btn:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: #cbd5e1;
+}
+.theme-switch-btn[aria-pressed="true"] {
+  background-color: rgba(255, 255, 255, 0.09);
+  color: #7dd3fc;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+}
+[data-theme="light"] .theme-switch-btn {
+  color: #6b7c92;
+}
+[data-theme="light"] .theme-switch-btn:hover {
+  background-color: rgba(15, 23, 42, 0.06);
+  color: #0f172a;
+}
+[data-theme="light"] .theme-switch-btn[aria-pressed="true"] {
+  background-color: #ffffff;
+  color: #0369a1;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.16);
+}
+[data-theme="light"] .theme-switch-btn[aria-pressed="true"] svg[data-icon="sun"],
+[data-theme="light"] .theme-switch-btn[aria-pressed="true"] .lucide-sun {
+  color: #b45309;
+}
+
+/* brand wordmark follows the active theme */
+.brand-wordmark {
+  color: #ffffff;
+}
+[data-theme="light"] .brand-wordmark {
+  color: #0b1526;
+}

@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Crafto VPN Control</title>
+    <script>
+      // GitHub Pages has no server-side rewrites. Any unknown path is sent
+      // back to the static app shell using hash routing, which keeps the
+      // repository sub-path and never shows a 404 page.
+      (function () {
+        var segments = window.location.pathname.split("/").filter(Boolean);
+        var owner = window.location.hostname.endsWith("github.io");
+        var repo = owner && segments.length > 1 ? segments[0] + "/" : "";
+        var base = owner ? "/" + repo : "/";
+        var route = window.location.pathname.indexOf("terminal") !== -1 ? "#/terminal" : "#/dashboard";
+        window.location.replace(base + route + window.location.search);
+      })();
+    </script>
+  </head>
+  <body></body>
+</html>
